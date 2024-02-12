@@ -22,11 +22,19 @@ app.use('/auth/login',routeLogin)
 const routeRegister = require('./routes/Auth/register')
 app.use('/auth/register',routeRegister)
 
-const firstRoute = require('./routes/first')
-app.use('/',verifyjwt,firstRoute)
+/////////////////////////
+
+const routegetMyUser = require('./routes/getMyUser')
+app.use('/get/user',verifyjwt,routegetMyUser)
+
+const getRecentPostsRoute = require('./routes/getRecentPosts')
+app.use('/',verifyjwt,getRecentPostsRoute)
 
 const addPostRoute = require('./routes/addPost')
-app.use('/post',addPostRoute)
+app.use('/post',verifyjwt,addPostRoute)
+
+
+
 
 //CONNECTION DATABASE
 mongoose.connect(`mongodb+srv://${mongoUser}:${mongoPass}@database.6f1mezu.mongodb.net/`).then(() => {
