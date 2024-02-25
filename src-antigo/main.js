@@ -24,13 +24,13 @@ app.use('/auth/register',routeRegister)
 
 /////////////////////////
 
-const routegetMyUser = require('./routes/getMyUser')
-app.use('/get/user',verifyjwt,routegetMyUser)
+const routeGetMyUser = require('./routes/get-my-user')
+app.use('/get/user',verifyjwt,routeGetMyUser)
 
-const getRecentPostsRoute = require('./routes/getRecentPosts')
+const getRecentPostsRoute = require('./routes/get-recent-posts')
 app.use('/',verifyjwt,getRecentPostsRoute)
 
-const addPostRoute = require('./routes/addPost')
+const addPostRoute = require('./routes/create-post')
 app.use('/post',verifyjwt,addPostRoute)
 
 

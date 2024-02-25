@@ -11,17 +11,15 @@ const formData = require("express-form-data");
 
   module.exports = app.post('/',async (req,res)=>{
     
-    let postFormat = {}
-
     //verificar se chegou o tittle a fazer ação caso tenha chego o tittle
-    if(req.body.tittle) post.tittle = req.body.tittle
+    
     //verificar se a imagem chegou, se chegou fazer upload no cloudnary e depois me devolver a url
     //verificar se chegou a photo e fazer ação caso tenha chego a foto
     //pegar a imagem em formdata,tittle,ischild,usertoken
     
     
 
-
-    return res.send(post)
+    console.log(req.body)
+    return res.send({msg:'Post criado com sucesso'})
     //pegar o id dentro do token
 })
