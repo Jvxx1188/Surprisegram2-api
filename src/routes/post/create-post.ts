@@ -8,23 +8,30 @@ import  multipart  from '@fastify/multipart';
 import { prisma } from "../../lib/prisma";
 import {v2} from 'cloudinary'
 export async function createPost(app : FastifyInstance){
-  app.register(multipart,{limits: { fileSize: 15 * 1024 * 1024 }})
-    
+  app.register(multipart,{limits: { fileSize: 15 * 1024 * 1024},attachFieldsToBody : true})
+  
   app.post('/posts/add',async (req,res)=>{
-        //jwt validation
+    //jwt validation
+    console.log('criação de post solicitada')
    const jwt =await jwtValidation(app,req,res)
-      //pega a file
+   console.log('validação confirmada')
+   //pega a file
+   const body = await req.body;
+   console.log('files' , body)
         const file = await req.file() as unknown as any;
+        
         if(!file) return res.status(400).send({error:'não foram enviados nenhum arquivo!!'})
+
+      return
         //pega a imagem
-        const image = await  file.fields.img.file as any
+        const image = await  file.fields.img.file as any          
         //pega a extensão da imagem
         const imageExtensionFile =await path.extname(file.fields.img.filename)
         //pega o title
-        let title = await file.fields.title.value as string
+        let title = await file.fields?.title?.value as string
         //cria a imgurl
         if(!title) title =''
-
+return 
        await CheckingValidExtensionImage(imageExtensionFile,res)
           //userExists?
          const userExists=await prisma.user.findUnique({
@@ -77,7 +84,7 @@ export async function createPost(app : FastifyInstance){
 }
 
 function CheckingValidExtensionImage(fileExtension : string,res : FastifyReply) {
-  if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.jpeg' || fileExtension === '.gif'){
+  if(fileExtension === '.png' || fileExtension === '.jpg' || fileExtension === '.jpeg' || fileExtension === '.gif' ||fileExtension == ''){
     return true
   }else{
     res.status(400).send({error:'Extensão do arquivo somente png/jpg/jpeg/gif'})
