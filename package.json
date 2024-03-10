@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "server": "tsx watch src/server.ts",
-   "start" : "node ./dist/server.js",
-"build" : "tsc"
+    "postinstall": "prisma generate",
+    "start": "node ./dist/server.js",
+    "build": "prisma generate && tsc"
   },
   "author": "",
   "license": "ISC",
